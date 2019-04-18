@@ -6,7 +6,7 @@
 /*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/18 17:39:32 by hmidoun          ###   ########.fr       */
+/*   Updated: 2019/04/18 18:23:10 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,70 +17,46 @@ int			search_end(char *str)
 	char *c;
 	char *t;
 
-	t = str;
 	c = ft_strchr(str, '\n');
 	if (c)
 		return (c - str);
 	return (-1);
 }
 
-char	*read_file(char *str, int fd)
-{
-	char	*tmp;
-	int		ret;
-
-	tmp =(char *)malloc(sizeof(char) * (BUFF_SIZE+2));
-	ret = 1;
-	if(!tmp)
-		return(NULL);
-	while (search_end(tmp) < 0 && ret > 0)
-		{
-			ret = read(fd, tmp, BUFF_SIZE);
-			if (ret)
-				tmp[ret] = '\0';
-			str = ft_strjoin(str,tmp);
-		}
-	free(tmp);
-	return(str);
-}
-
 int		get_next_line(int const fd, char **line)
 {
 	static char	*str;
 	int			end;
-	char c;
+	int			ret;
 
-	if(fd < 0 || !(*line))
-		return(-1);
+	ret = 1;
 	if(!str)
-	{
 		str = (char*)malloc(sizeof(char) * (BUFF_SIZE+1));
-		if(!str)
-			return(-1);
-	}
-/*
-	while (*str == '\n')
-		str++;*/
-	str = read_file(str,fd);
-	end = search_end(str);
-	c = *str;
-	if (*str < 0)
+	if(fd < 0 || !(*line) || !str)
+		return(-1);
+	if ((end = search_end(str)) < 0)
 	{
-		*line = NULL;
-		return (0);
+		*line = ft_strsub(str, 0, ft_strlen(str));
+		str += ft_strlen(str);
 	}
-	if (end >= 0)
+	else
 	{
-		*line = ft_strsub(str,0,end);
-		str += end + 1;
+		*line = ft_strsub(str, 0, end);
+		str += end;
+		return (1);
+	}
+
+	while (ret > 0)
+	{
+		ret = read(fd, str, BUFF_SIZE);
+		str[ret] = '\0';
+		*line = ft_strjoin(*line,str);
 	}
 	return(1);
 }
 
 int main()
 {
-
-
     int fd;
     int tst;
     char *line;
@@ -94,7 +70,7 @@ int main()
 
    //line = read_file(line,fd);
 
-  printf("%s",line);
+  printf("%s\n\t%d\t**************************************************** %d\n",line,tst,i);
    }
   return(0);
 }
