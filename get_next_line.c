@@ -6,7 +6,7 @@
 /*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/16 18:31:02 by hmidoun          ###   ########.fr       */
+/*   Updated: 2019/04/19 23:08:40 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int		search_end(char *str)
 	{
 		if(str[i] == '\n')
 			return(i);
-		 if(str[i] < 0)
-		 	return(-2);
 		i++;
 	}
 	return(-1);
@@ -32,15 +30,18 @@ char	*read_file(char *str, int fd)
 {
 	char	*tmp;
 	int		ret;
-	tmp =(char *)malloc(sizeof(char) * (BUFF_SIZE+1));
-	if(!tmp)
-		return(NULL);
-	while ((ret = read(fd, tmp, BUFF_SIZE)) > 0)
+	char	buffer[BUFF_SIZE + 1];
+
+	while ( (ret = read(fd, buffer, BUFF_SIZE)) > 0)
 		{
-			tmp[ret] = '\0';
-			str = ft_strjoin(str,tmp);
+			buffer[ret] = '\0';
+			tmp = ft_strdup(str);
+			ft_strdel(&str);
+			str = ft_strjoin(tmp,buffer);
+			free(tmp);
+			if (search_end(buffer) >= 0)
+				break;
 		}
-	free(tmp);
 	return(str);
 }
 
@@ -49,46 +50,50 @@ int		get_next_line(int const fd, char **line)
 	static char	*str;
 	int			end;
 
-	if(fd == -1 || !(*line))
-		return(-1);
 	if(!str)
-	{
 		str = (char*)malloc(sizeof(char) * (BUFF_SIZE+1));
-		if(!str)
-			return(-1);
-		str = read_file(str,fd);
-	}
+	if(!str || fd < 0 || !line)
+		return(-1);
 	end = search_end(str);
-
-	*line = ft_strsub(str,0,end);
-	if(end == -1)
+	if (end < 0)
 	{
-		//  str += (2+end);
-		return(0);
+		if (!(str = read_file(str,fd)))
+			return (-1);
+		if (!*str)
+		{
+			*line = ft_strdup("");
+			return (0);
+		}
+		end = search_end(str);
 	}
-	str +=(1+end);
+	if (end < 0)
+	{
+		*line = ft_strdup( str);
+		*str = '\0';
+	}
+	else
+	{
+		*line = ft_strsub(str,0,end);
+		str += 1+end;
+	}
 	return(1);
 }
-       /*
 
 int main()
 {
-    int fd = open("tst", O_RDONLY) ;
+    int fd = open("/Users/hmidoun/gnl/tst/gnl1_2.txt", O_RDONLY) ;
    int tst;
 
     char *line;
 
-   line = (char*)malloc(sizeof(char) * (BUFF_SIZE + 1));
+   //line = (char*)malloc(sizeof(char) * (BUFF_SIZE + 1));
 
-   for(int i= 0 ; i<12; i++)
+   for(int i= 0 ; i<2; i++)
    {
    tst = get_next_line(fd,&line);
 
-
-
-   //line = read_file(line,fd);
-
-  printf("%s\n\t%d\t%d\n",line,tst,i);
+  printf("%s\n",line);
    }
   return(0);
-}         */
+}
+
