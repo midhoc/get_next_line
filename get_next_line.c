@@ -6,7 +6,7 @@
 /*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/19 23:08:40 by hmidoun          ###   ########.fr       */
+/*   Updated: 2019/04/19 23:24:43 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*read_file(char *str, int fd)
 		{
 			buffer[ret] = '\0';
 			tmp = ft_strdup(str);
-			ft_strdel(&str);
+			free(str);
 			str = ft_strjoin(tmp,buffer);
 			free(tmp);
 			if (search_end(buffer) >= 0)
