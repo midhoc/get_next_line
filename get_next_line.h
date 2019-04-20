@@ -6,13 +6,13 @@
 /*   By: midounhocine <midounhocine@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:24:58 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/20 13:40:38 by midounhocin      ###   ########.fr       */
+/*   Updated: 2019/04/20 14:39:40 by midounhocin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+# define BUFF_SIZE 8
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/uio.h>

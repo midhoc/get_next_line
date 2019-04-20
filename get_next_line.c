@@ -6,7 +6,7 @@
 /*   By: midounhocine <midounhocine@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/20 13:53:53 by midounhocin      ###   ########.fr       */
+/*   Updated: 2019/04/20 20:49:24 by midounhocin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*read_file(char *str, int fd)
 			if(str != NULL)
 			{
 				tmp = ft_strdup(str);
-				//free(str);
+				free(str);
 			}
 			else
 				tmp = ft_strdup("");
@@ -52,21 +52,25 @@ char	*read_file(char *str, int fd)
 
 int		get_next_line(int const fd, char **line)
 {
-	static char	*str;
+	char	*str;
+	static char				tmp[BUFF_SIZE + 1];
 	int			end;
 
-	// if(!str)
-	// 	str = (char*)malloc(sizeof(char) * (BUFF_SIZE+1));
-	if(/*!str || */fd < 0 || !line || read(fd, str, 0) < 0)
+	if (*tmp)
+			str = ft_strdup(tmp);
+	else
+		str = ft_strdup("");
+	if(fd < 0 || !line || read(fd, str, 0) < 0)
 		return(-1);
 	end = search_end(str);
 	if (end < 0)
 	{
-		if (!(str = read_file(str,fd)))
-			return (-1);
+		str = read_file(str,fd);
+			//return (-1);
 		if (!*str)
 		{
 			*line = ft_strdup("");
+			free(str);
 			return (0);
 		}
 		end = search_end(str);
@@ -74,13 +78,17 @@ int		get_next_line(int const fd, char **line)
 	if (end < 0)
 	{
 		*line = ft_strdup(str);
-		*str = '\0';
+		free(str);
+		*tmp = '\0';
 	}
 	else
 	{
 		*line = ft_strsub(str,0,end);
-		str += 1+end;
+		ft_strcpy(tmp, str+end+1);
+		//str += 1+end;
+		free(str);
 	}
+	//ft_strdel(&str);
 	return(1);
 }
 /*
