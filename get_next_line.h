@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midounhocine <midounhocine@student.42.f    +#+  +:+       +#+        */
+/*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:24:58 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/20 14:39:40 by midounhocin      ###   ########.fr       */
+/*   Updated: 2019/04/21 18:26:20 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include "./libft/libft.h"
 
-#include "./libft/libft.h"
-int     get_next_line(int const fd, char **line);
+int		get_next_line(int const fd, char **line);
 
 #endif
