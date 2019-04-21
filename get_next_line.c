@@ -6,7 +6,7 @@
 /*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/21 18:27:35 by hmidoun          ###   ########.fr       */
+/*   Updated: 2019/04/21 19:00:33 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,24 @@ char	*read_file(char *str, int fd)
 
 int		get_next_line(int const fd, char **line)
 {
-	static char	tmp[BUFF_SIZE + 1];
+	static char	tmp[OPEN_MAX][BUFF_SIZE + 1];
 	int			end;
 
-	if (fd < 0 || !line || read(fd, tmp, 0) < 0)
+	if (fd < 0 || !line || read(fd, tmp, 0) < 0 || fd > OPEN_MAX)
 		return (-1);
-	*line = ft_strdup(tmp);
+	*line = ft_strdup(tmp[fd]);
 	end = search_end(*line);
 	if (end < 0)
 	{
 		*line = read_file(*line, fd);
 		if (!**line)
-		{
-			free(*line);
-			*line = ft_strdup("");
 			return (0);
-		}
 		end = search_end(*line);
 	}
-	*tmp = '\0';
+	tmp[fd][0] = '\0';
 	if (end >= 0)
 	{
-		ft_strcpy(tmp, *line + end + 1);
+		ft_strcpy(tmp[fd], *line + end + 1);
 		(*line)[end] = '\0';
 	}
 	return (1);

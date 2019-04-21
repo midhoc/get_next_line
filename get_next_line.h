@@ -6,7 +6,7 @@
 /*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:24:58 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/21 18:26:20 by hmidoun          ###   ########.fr       */
+/*   Updated: 2019/04/21 18:46:47 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "./libft/libft.h"
+# include <limits.h>
 
 int		get_next_line(int const fd, char **line);
 
