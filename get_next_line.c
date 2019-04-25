@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
+/*   By: midounhocine <midounhocine@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/21 19:00:33 by hmidoun          ###   ########.fr       */
+/*   Updated: 2019/04/25 13:27:07 by midounhocin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ char	*read_file(char *str, int fd)
 {
 	int		ret;
 	char	buffer[BUFF_SIZE + 1];
+	char	*free_it;
 
 	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
-		str = ft_strcat(str, buffer);
+		free_it = str;
+		str = ft_strjoin(str, buffer);
+		free(free_it);
 		if (search_end(buffer) >= 0)
 			break ;
 	}
