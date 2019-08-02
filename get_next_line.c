@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midounhocine <midounhocine@student.42.f    +#+  +:+       +#+        */
+/*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 13:26:15 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/04/25 15:52:36 by midounhocin      ###   ########.fr       */
+/*   Updated: 2019/07/25 13:48:42 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ int		get_next_line(int const fd, char **line)
 	{
 		*line = read_file(*line, fd);
 		if (!**line)
+		{
+			free(*line);
 			return (0);
+		}
 		end = search_end(*line);
 	}
 	tmp[fd][0] = '\0';

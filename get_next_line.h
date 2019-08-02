@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: midounhocine <midounhocine@student.42.f    +#+  +:+       +#+        */
+/*   By: hmidoun <hmidoun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/15 13:24:58 by midounhoc         #+#    #+#             */
-/*   Updated: 2019/07/23 19:13:17 by midounhoc        ###   ########.fr       */
+/*   Created: 2019/07/24 14:32:25 by hmidoun           #+#    #+#             */
+/*   Updated: 2019/07/24 14:43:32 by hmidoun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 3
+# define BUFF_SIZE 4
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/uio.h>
